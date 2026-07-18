@@ -1,96 +1,117 @@
 let exchangeRate = 5.05;
+let mode = "RON-EUR";
 
-const amount = document.getElementById("amount");
-const direction = document.getElementById("direction");
-const result = document.getElementById("result");
+const lei = document.getElementById("lei");
+const eur = document.getElementById("eur");
 const rate = document.getElementById("rate");
-const convert = document.getElementById("convert");
+const swap = document.getElementById("swap");
 
 async function loadRate() {
-
     try {
-
         const response = await fetch("https://open.er-api.com/v6/latest/EUR");
-
-        if (!response.ok) {
-            throw new Error("Error obteniendo el cambio");
-        }
-
         const data = await response.json();
-
-        if (!data.rates || !data.rates.RON) {
-            throw new Error("Respuesta inválida");
-        }
 
         exchangeRate = data.rates.RON;
 
         localStorage.setItem("exchangeRate", exchangeRate);
 
-        rate.innerHTML = `1 EUR = <strong>${exchangeRate.toFixed(4)}</strong> LEI`;
+        rate.innerHTML = `1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
 
-    } catch (error) {
+    } catch {
 
-        console.error(error);
+        exchangeRate = Number(localStorage.getItem("exchangeRate")) || 5.05;
 
-        const saved = localStorage.getItem("exchangeRate");
-
-        if (saved) {
-
-            exchangeRate = Number(saved);
-
-            rate.innerHTML =
-                `📶 Offline · 1 EUR = <strong>${exchangeRate.toFixed(4)}</strong> LEI`;
-
-        } else {
-
-            rate.innerHTML =
-                "❌ No se pudo obtener el tipo de cambio";
-
-        }
-
+        rate.innerHTML = `📶 Offline · 1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
     }
-
 }
 
-function convertMoney(value = null) {
+function fromLei() {
 
-    const amountValue = value ?? Number(amount.value);
-
-    if (!amountValue) {
-        result.innerHTML = "—";
+    if (lei.value === "") {
+        eur.value = "";
         return;
     }
 
-    if (direction.value === "RON-EUR") {
+    eur.value = (Number(lei.value) / exchangeRate).toFixed(2);
+}
 
-        result.innerHTML =
-            `${(amountValue / exchangeRate).toFixed(2)} €`;
+function fromEuro() {
+
+    if (eur.value === "") {
+        lei.value = "";
+        return;
+    }
+
+    lei.value = (Number(eur.value) * exchangeRate).toFixed(2);
+}
+
+lei.addEventListener("input", () => {
+
+    mode = "RON-EUR";
+
+    fromLei();
+
+});
+
+eur.addEventListener("input", () => {
+
+    mode = "EUR-RON";
+
+    fromEuro();
+
+});
+
+swap.addEventListener("click", () => {
+
+    swap.animate([
+        { transform: "rotate(0deg)" },
+        { transform: "rotate(180deg)" }
+    ], {
+        duration: 250
+    });
+
+    if (mode === "RON-EUR") {
+
+        eur.focus();
+
+        eur.select();
+
+        mode = "EUR-RON";
 
     } else {
 
-        result.innerHTML =
-            `${(amountValue * exchangeRate).toFixed(2)} LEI`;
+        lei.focus();
+
+        lei.select();
+
+        mode = "RON-EUR";
 
     }
 
-}
+});
 
-convert.addEventListener("click", convertMoney);
+document.querySelectorAll(".quick button").forEach(btn => {
 
-amount.addEventListener("input", convertMoney);
+    btn.onclick = () => {
 
-direction.addEventListener("change", convertMoney);
+        if (mode === "RON-EUR") {
 
-document.querySelectorAll(".quickBtn").forEach(button => {
+            lei.value = btn.innerText;
 
-    button.addEventListener("click", () => {
+            fromLei();
 
-        amount.value = button.textContent;
+        } else {
 
-        convertMoney(Number(button.textContent));
+            eur.value = btn.innerText;
 
-    });
+            fromEuro();
+
+        }
+
+    };
 
 });
 
 loadRate();
+
+lei.focus();
