@@ -90,3 +90,7 @@ document.querySelectorAll(".quickBtn").forEach(button => {
 });
 
 loadRate();
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
