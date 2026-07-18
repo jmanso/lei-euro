@@ -1,5 +1,18 @@
+html{
+    background:#0b0b0f;
+}
+
+body{
+    background:#0b0b0f;
+    color:white;
+    min-height:100vh;
+
+    padding-top:max(20px, env(safe-area-inset-top));
+    padding-bottom:max(20px, env(safe-area-inset-bottom));
+}
+
 :root{
-  --bg:#f2f4f8;
+  --yobg:#f2f4f8;
   --card:#ffffff;
   --primary:#0A84FF;
   --text:#111827;
