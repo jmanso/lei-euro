@@ -1,49 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Lei2Euro</title>
 
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#0b0b0f">
 
-<meta name="theme-color" content="#0A84FF">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Lei2Euro">
 
-<meta name="theme-color" content="#0b0b0f">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+
+<link rel="apple-touch-icon" href="icon-192.png">
+
 </head>
 
 <body>
 
 <div class="container">
 
-<div class="header">
+<header class="header">
 
-<h1>🇷🇴 Lei2Euro</h1>
-
-<p id="rate">
-Actualizando cambio...
-</p>
-
+<div class="flags">
+<span>🇷🇴</span>
+<span>🇪🇺</span>
 </div>
 
-<div class="converter">
+<h1>Lei2Euro</h1>
 
-<div class="currency">
+<div id="rate" class="rate">
+Cargando cambio...
+</div>
 
-<label>LEI</label>
+<p class="credits">
+By Pulgarcito's Team
+</p>
+
+</header>
+
+<main>
+
+<section class="card">
+
+<div class="currencyTitle">
+🇷🇴 LEI
+</div>
 
 <input
 id="lei"
 type="number"
-placeholder="0">
+inputmode="decimal"
+placeholder="0"
+autocomplete="off">
 
-</div>
+</section>
+
+<div class="swapContainer">
 
 <button id="swap">
 
@@ -51,36 +69,48 @@ placeholder="0">
 
 </button>
 
-<div class="currency">
+</div>
 
-<label>EUR</label>
+<section class="card">
+
+<div class="currencyTitle">
+🇪🇺 EUR
+</div>
 
 <input
 id="eur"
 type="number"
-placeholder="0">
+inputmode="decimal"
+placeholder="0"
+autocomplete="off">
 
-</div>
+</section>
 
-</div>
-
-<div class="quick">
+<section class="quick">
 
 <button>10</button>
 <button>20</button>
 <button>50</button>
-
 <button>100</button>
 <button>200</button>
 <button>500</button>
-
 <button>1000</button>
+<button>2000</button>
 
-</div>
+</section>
+
+</main>
+
+<footer>
+
+Made with ❤️ in Spain
+
+</footer>
 
 </div>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
