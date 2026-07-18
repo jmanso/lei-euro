@@ -1,112 +1,136 @@
 let exchangeRate = 5.05;
-let mode = "RON-EUR";
 
 const lei = document.getElementById("lei");
 const eur = document.getElementById("eur");
 const rate = document.getElementById("rate");
 const swap = document.getElementById("swap");
 
+let editing = "lei";
+
 async function loadRate() {
+
     try {
+
         const response = await fetch("https://open.er-api.com/v6/latest/EUR");
+
         const data = await response.json();
 
         exchangeRate = data.rates.RON;
 
-        localStorage.setItem("exchangeRate", exchangeRate);
+        localStorage.setItem("lei2eur-rate", exchangeRate);
 
-        rate.innerHTML = `1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
+        rate.innerHTML =
+            `🟢 1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
 
     } catch {
 
-        exchangeRate = Number(localStorage.getItem("exchangeRate")) || 5.05;
+        exchangeRate =
+            Number(localStorage.getItem("lei2eur-rate")) || 5.05;
 
-        rate.innerHTML = `📶 Offline · 1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
+        rate.innerHTML =
+            `🟡 Offline · 1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
+
     }
+
 }
 
-function fromLei() {
+function format(n){
 
-    if (lei.value === "") {
-        eur.value = "";
+    return Number(n).toLocaleString("es-ES",{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+    });
+
+}
+
+function fromLei(){
+
+    if(lei.value===""){
+
+        eur.value="";
         return;
+
     }
 
-    eur.value = (Number(lei.value) / exchangeRate).toFixed(2);
+    eur.value=format(Number(lei.value)/exchangeRate);
+
 }
 
-function fromEuro() {
+function fromEuro(){
 
-    if (eur.value === "") {
-        lei.value = "";
+    if(eur.value===""){
+
+        lei.value="";
         return;
+
     }
 
-    lei.value = (Number(eur.value) * exchangeRate).toFixed(2);
+    lei.value=format(Number(eur.value.replace(",","."))*exchangeRate);
+
 }
 
-lei.addEventListener("input", () => {
+lei.addEventListener("input",()=>{
 
-    mode = "RON-EUR";
+    editing="lei";
 
     fromLei();
 
 });
 
-eur.addEventListener("input", () => {
+eur.addEventListener("input",()=>{
 
-    mode = "EUR-RON";
+    editing="eur";
 
     fromEuro();
 
 });
 
-swap.addEventListener("click", () => {
+swap.onclick=()=>{
 
     swap.animate([
-        { transform: "rotate(0deg)" },
-        { transform: "rotate(180deg)" }
-    ], {
-        duration: 250
+        {transform:"rotate(0deg)"},
+        {transform:"rotate(180deg)"}
+    ],{
+        duration:250
     });
 
-    if (mode === "RON-EUR") {
+    const l=lei.value;
+    const e=eur.value;
 
+    lei.value=e;
+    eur.value=l;
+
+    if(editing==="lei"){
+
+        editing="eur";
         eur.focus();
 
-        eur.select();
+    }else{
 
-        mode = "EUR-RON";
-
-    } else {
-
+        editing="lei";
         lei.focus();
-
-        lei.select();
-
-        mode = "RON-EUR";
 
     }
 
-});
+};
 
-document.querySelectorAll(".quick button").forEach(btn => {
+document.querySelectorAll(".quick button").forEach(btn=>{
 
-    btn.onclick = () => {
+    btn.onclick=()=>{
 
-        if (mode === "RON-EUR") {
+        if(editing==="lei"){
 
-            lei.value = btn.innerText;
-
+            lei.value=btn.innerText;
             fromLei();
 
-        } else {
+        }else{
 
-            eur.value = btn.innerText;
-
+            eur.value=btn.innerText;
             fromEuro();
 
         }
+
+        document.activeElement.blur();
 
     };
 
