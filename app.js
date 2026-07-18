@@ -10,20 +10,27 @@ async function loadRate() {
 
     try {
 
-        const response = await fetch(
-            "https://api.frankfurter.app/latest?from=EUR&to=RON"
-        );
+        const response = await fetch("https://open.er-api.com/v6/latest/EUR");
+
+        if (!response.ok) {
+            throw new Error("Error obteniendo el cambio");
+        }
 
         const data = await response.json();
+
+        if (!data.rates || !data.rates.RON) {
+            throw new Error("Respuesta inválida");
+        }
 
         exchangeRate = data.rates.RON;
 
         localStorage.setItem("exchangeRate", exchangeRate);
 
-        rate.innerHTML =
-            `1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
+        rate.innerHTML = `1 EUR = <strong>${exchangeRate.toFixed(4)}</strong> LEI`;
 
-    } catch {
+    } catch (error) {
+
+        console.error(error);
 
         const saved = localStorage.getItem("exchangeRate");
 
@@ -32,12 +39,12 @@ async function loadRate() {
             exchangeRate = Number(saved);
 
             rate.innerHTML =
-                `📶 Sin conexión · 1 EUR = <b>${exchangeRate.toFixed(4)}</b> LEI`;
+                `📶 Offline · 1 EUR = <strong>${exchangeRate.toFixed(4)}</strong> LEI`;
 
         } else {
 
             rate.innerHTML =
-                "No se pudo obtener el tipo de cambio";
+                "❌ No se pudo obtener el tipo de cambio";
 
         }
 
@@ -47,50 +54,43 @@ async function loadRate() {
 
 function convertMoney(value = null) {
 
-    let amountValue = value ?? Number(amount.value);
+    const amountValue = value ?? Number(amount.value);
 
     if (!amountValue) {
-
         result.innerHTML = "—";
-
         return;
-
     }
 
     if (direction.value === "RON-EUR") {
 
         result.innerHTML =
-            (amountValue / exchangeRate).toFixed(2) + " €";
+            `${(amountValue / exchangeRate).toFixed(2)} €`;
 
     } else {
 
         result.innerHTML =
-            (amountValue * exchangeRate).toFixed(2) + " LEI";
+            `${(amountValue * exchangeRate).toFixed(2)} LEI`;
 
     }
 
 }
 
-convert.addEventListener("click", () => convertMoney());
+convert.addEventListener("click", convertMoney);
 
-amount.addEventListener("input", () => convertMoney());
+amount.addEventListener("input", convertMoney);
 
-direction.addEventListener("change", () => convertMoney());
+direction.addEventListener("change", convertMoney);
 
 document.querySelectorAll(".quickBtn").forEach(button => {
 
     button.addEventListener("click", () => {
 
-        amount.value = button.innerText;
+        amount.value = button.textContent;
 
-        convertMoney(Number(button.innerText));
+        convertMoney(Number(button.textContent));
 
     });
 
 });
 
 loadRate();
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
