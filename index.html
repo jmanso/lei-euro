@@ -1,68 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Romania Companion</title>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1F6FEB">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <link rel="stylesheet" href="styles.css">
+<title>Lei2Euro</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
+
+<meta name="theme-color" content="#0A84FF">
+
 </head>
 
 <body>
 
-<header>
-    <h1>🇷🇴 Romania Companion</h1>
-    <p id="rate">Actualizando cambio...</p>
-</header>
+<div class="container">
 
-<main>
+<div class="header">
 
-<div class="card">
+<h1>🇷🇴 Lei2Euro</h1>
 
-<h2>💱 Conversor</h2>
+<p id="rate">
+Actualizando cambio...
+</p>
 
-<select id="direction">
-    <option value="RON-EUR">LEI → EUR</option>
-    <option value="EUR-RON">EUR → LEI</option>
-</select>
+</div>
+
+<div class="converter">
+
+<div class="currency">
+
+<label>LEI</label>
 
 <input
+id="lei"
 type="number"
-id="amount"
-placeholder="Introduce cantidad">
+placeholder="0">
 
-<button id="convert">
-Convertir
+</div>
+
+<button id="swap">
+
+⇅
+
 </button>
 
-<div id="result">
-—
-</div>
+<div class="currency">
+
+<label>EUR</label>
+
+<input
+id="eur"
+type="number"
+placeholder="0">
 
 </div>
 
-<div class="card">
-
-<h2>Conversión rápida</h2>
+</div>
 
 <div class="quick">
 
-<button class="quickBtn">10</button>
-<button class="quickBtn">20</button>
-<button class="quickBtn">50</button>
-<button class="quickBtn">100</button>
-<button class="quickBtn">200</button>
-<button class="quickBtn">500</button>
-<button class="quickBtn">1000</button>
+<button>10</button>
+<button>20</button>
+<button>50</button>
+
+<button>100</button>
+<button>200</button>
+<button>500</button>
+
+<button>1000</button>
 
 </div>
 
 </div>
-
-</main>
 
 <script src="app.js"></script>
 
