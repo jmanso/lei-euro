@@ -4,20 +4,20 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <title>Lei2Euro</title>
 
-<meta name="theme-color" content="#0b0b0f">
+<meta name="theme-color" content="#0B0B0F">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Lei2Euro">
 
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
-
 <link rel="apple-touch-icon" href="icon-192.png">
+
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -25,43 +25,37 @@
 
 <div class="container">
 
-<header class="header">
+<header>
 
 <div class="flags">
-<span>🇷🇴</span>
-<span>🇪🇺</span>
+🇷🇴 🇪🇺
 </div>
 
 <h1>Lei2Euro</h1>
 
 <div id="rate" class="rate">
-Cargando cambio...
+Cargando...
 </div>
 
-<p class="credits">
+<div class="credits">
 By Pulgarcito's Team
-</p>
+</div>
 
 </header>
 
-<main>
+<div class="card">
 
-<section class="card">
-
-<div class="currencyTitle">
-🇷🇴 LEI
-</div>
+<label>🇷🇴 LEI</label>
 
 <input
 id="lei"
 type="number"
 inputmode="decimal"
-placeholder="0"
-autocomplete="off">
+placeholder="0">
 
-</section>
+</div>
 
-<div class="swapContainer">
+<div class="swap">
 
 <button id="swap">
 
@@ -71,39 +65,35 @@ autocomplete="off">
 
 </div>
 
-<section class="card">
+<div class="card">
 
-<div class="currencyTitle">
-🇪🇺 EUR
-</div>
+<label>🇪🇺 EUR</label>
 
 <input
 id="eur"
 type="number"
 inputmode="decimal"
-placeholder="0"
-autocomplete="off">
+placeholder="0">
 
-</section>
+</div>
 
-<section class="quick">
+<div class="quick">
 
-<button>10</button>
-<button>20</button>
-<button>50</button>
-<button>100</button>
-<button>200</button>
-<button>500</button>
-<button>1000</button>
-<button>2000</button>
+<button data-value="10">10</button>
+<button data-value="20">20</button>
+<button data-value="50">50</button>
+<button data-value="100">100</button>
 
-</section>
+<button data-value="200">200</button>
+<button data-value="500">500</button>
+<button data-value="1000">1000</button>
+<button data-value="2000">2000</button>
 
-</main>
+</div>
 
 <footer>
 
-Made with ❤️ in Spain
+Made with ❤️
 
 </footer>
 
