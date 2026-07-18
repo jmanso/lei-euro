@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Romania Companion</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1F6FEB">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header>
+    <h1>🇷🇴 Romania Companion</h1>
+    <p id="rate">Actualizando cambio...</p>
+</header>
+
+<main>
+
+<div class="card">
+
+<h2>💱 Conversor</h2>
+
+<select id="direction">
+    <option value="RON-EUR">LEI → EUR</option>
+    <option value="EUR-RON">EUR → LEI</option>
+</select>
+
+<input
+type="number"
+id="amount"
+placeholder="Introduce cantidad">
+
+<button id="convert">
+Convertir
+</button>
+
+<div id="result">
+—
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Conversión rápida</h2>
+
+<div class="quick">
+
+<button class="quickBtn">10</button>
+<button class="quickBtn">20</button>
+<button class="quickBtn">50</button>
+<button class="quickBtn">100</button>
+<button class="quickBtn">200</button>
+<button class="quickBtn">500</button>
+<button class="quickBtn">1000</button>
+
+</div>
+
+</div>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>
