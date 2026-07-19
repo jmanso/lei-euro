@@ -2,11 +2,10 @@ const leiInput = document.getElementById("lei");
 const eurInput = document.getElementById("eur");
 const rateLabel = document.getElementById("rate");
 const swapButton = document.getElementById("swap");
+const directionLabel = document.getElementById("direction");
 
 let rate = 5.05;
 let direction = "LEI_TO_EUR";
-
-// ---------- Cargar cambio ----------
 
 async function loadRate() {
 
@@ -19,25 +18,57 @@ async function loadRate() {
 
         localStorage.setItem("rate", rate);
 
-        rateLabel.innerHTML =
-            `🟢 1 EUR = <b>${rate.toFixed(4)}</b> LEI`;
-
     } catch {
 
         rate = Number(localStorage.getItem("rate")) || 5.05;
 
-        rateLabel.innerHTML =
-            `🟡 Offline · 1 EUR = <b>${rate.toFixed(4)}</b> LEI`;
-
     }
+
+    rateLabel.innerHTML = `1 EUR = ${rate.toFixed(4)} LEI`;
 
 }
 
 loadRate();
 
-// ---------- Conversión ----------
+function updateMode() {
 
-function convertLeiToEuro() {
+    if (direction === "LEI_TO_EUR") {
+
+        swapButton.textContent = "➡";
+
+        directionLabel.textContent = "LEI → EUR";
+
+        leiInput.readOnly = false;
+        eurInput.readOnly = true;
+
+        leiInput.type = "number";
+        eurInput.type = "text";
+
+        leiInput.focus();
+
+        convertLei();
+
+    } else {
+
+        swapButton.textContent = "⬅";
+
+        directionLabel.textContent = "EUR → LEI";
+
+        eurInput.readOnly = false;
+        leiInput.readOnly = true;
+
+        eurInput.type = "number";
+        leiInput.type = "text";
+
+        eurInput.focus();
+
+        convertEuro();
+
+    }
+
+}
+
+function convertLei() {
 
     const value = parseFloat(leiInput.value);
 
@@ -52,7 +83,7 @@ function convertLeiToEuro() {
 
 }
 
-function convertEuroToLei() {
+function convertEuro() {
 
     const value = parseFloat(eurInput.value);
 
@@ -67,79 +98,52 @@ function convertEuroToLei() {
 
 }
 
-// ---------- Eventos ----------
-
 leiInput.addEventListener("input", () => {
 
     if (direction === "LEI_TO_EUR")
-        convertLeiToEuro();
+        convertLei();
 
 });
 
 eurInput.addEventListener("input", () => {
 
     if (direction === "EUR_TO_LEI")
-        convertEuroToLei();
+        convertEuro();
 
 });
-
-// ---------- Cambiar sentido ----------
 
 swapButton.addEventListener("click", () => {
 
-    swapButton.animate(
+    direction =
+        direction === "LEI_TO_EUR"
+            ? "EUR_TO_LEI"
+            : "LEI_TO_EUR";
 
-        [
-            { transform: "rotate(0deg)" },
-            { transform: "rotate(180deg)" }
-        ],
+    leiInput.value = "";
+    eurInput.value = "";
 
-        {
-            duration: 250
-        }
-
-    );
-
-    if (direction === "LEI_TO_EUR") {
-
-        direction = "EUR_TO_LEI";
-
-        eurInput.focus();
-
-    } else {
-
-        direction = "LEI_TO_EUR";
-
-        leiInput.focus();
-
-    }
+    updateMode();
 
 });
-
-// ---------- Botones rápidos ----------
 
 document.querySelectorAll(".quick button").forEach(button => {
 
-    button.addEventListener("click", () => {
-
-        const value = button.dataset.value;
+    button.onclick = () => {
 
         if (direction === "LEI_TO_EUR") {
 
-            leiInput.value = value;
-            convertLeiToEuro();
+            leiInput.value = button.dataset.value;
+            convertLei();
 
         } else {
 
-            eurInput.value = value;
-            convertEuroToLei();
+            eurInput.value = button.dataset.value;
+            convertEuro();
 
         }
 
-    });
+    };
 
 });
 
-// ---------- Estado inicial ----------
-
-leiInput.focus();
+updateMode();
