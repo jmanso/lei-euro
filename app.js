@@ -34,7 +34,7 @@ function updateMode() {
 
     if (direction === "LEI_TO_EUR") {
 
-        swapButton.textContent = "➡";
+     document.getElementById("swapIcon").style.transform = "rotate(0deg)";
 
         directionLabel.textContent = "LEI → EUR";
 
@@ -50,7 +50,7 @@ function updateMode() {
 
     } else {
 
-        swapButton.textContent = "⬅";
+        document.getElementById("swapIcon").style.transform = "rotate(180deg)";
 
         directionLabel.textContent = "EUR → LEI";
 
