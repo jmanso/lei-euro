@@ -34,7 +34,7 @@ function updateMode() {
 
     if (direction === "LEI_TO_EUR") {
 
-         document.getElementById("swapIcon").style.transform = "rotate(180deg)";
+         document.getElementById("swapIcon").style.transform = "rotate(270deg)";
 
         directionLabel.textContent = "LEI → EUR";
 
