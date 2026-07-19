@@ -50,7 +50,7 @@ function updateMode() {
 
     } else {
 
-        document.getElementById("swapIcon").style.transform = "rotate(90deg)"; 
+        document.getElementById("swapIcon").style.transform = "rotate(270deg)"; 
     
 
         directionLabel.textContent = "EUR → LEI";
