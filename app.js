@@ -148,3 +148,16 @@ document.querySelectorAll(".quick button").forEach(button => {
 });
 
 updateMode();
+
+document.querySelectorAll(".quick button").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        document.querySelectorAll(".quick button")
+            .forEach(b => b.classList.remove("selected"));
+
+        button.classList.add("selected");
+
+    });
+
+});
